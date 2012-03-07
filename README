@@ -1,0 +1,12 @@
+These modules provide an algebraic data type for atoms and proteins.
+The data is expected to come from Protein Data Bank .pdb files. 
+The parser will interpret ATOM and HETATM record types.
+
+When implementing the parser over a large number of files:
+
+1. Compile your code. 
+2. Use mapM_ in your main loop to ensure computations are done sequentially.
+
+
+At the moment, all vector operations are conducted by Vectors.hs. Be warned that
+this is an unsafe module (it makes no effort to check vector lengths, etc.; in our case everything is three dimensional. 
