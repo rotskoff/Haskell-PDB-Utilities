@@ -1,0 +1,133 @@
+Name:                PDBtools
+Version:             0.0.1
+License:             LGPL
+License-file:        LICENSE
+Cabal-Version:       >= 1.6
+Author:              Grant Rotskoff
+Maintainer:          gmr1887@gmail.com
+
+Category:            Bioinformatics
+Synopsis:            A library for analysis of 3-D protein coordinates
+Description:         This is a collection of modules for the analysis of protein
+                     coordinates. 
+                     .
+                     The Git repository is at: <https://rotskoff@github.com/rotskoff/Haskell-PDB-Utilities.git>.
+Homepage:            http://www.github.com/rotskoff
+
+Tested-With:         GHC==6.12.1
+Build-Type:          Simple
+Data-Files:          README, Makefile
+
+Flag test
+  Description:       Build testing software
+  Default:           False
+
+Flag examples
+  Description:       Build example programs
+  Default:           True
+
+Library
+  Build-Depends:     base>=4 && <5, binary >=0.4 && <0.5, tagsoup>=0.8, bytestring >= 0.9.1,
+                     containers, array, parallel, parsec, mtl, directory, QuickCheck >= 2
+
+  Exposed-modules:   PDBtools.pdbparse
+                     PDBtools.pdbutil
+                     PDBtools.vectors
+
+  Extensions:        CPP, ParallelListComp
+  if impl(ghc >= 6.12)
+    Ghc-Options:       -Wall -O2 -fexcess-precision -funbox-strict-fields -auto-all -fno-warn-unused-do-bind
+  else
+    Ghc-Options:       -Wall -O2 -fexcess-precision -funbox-strict-fields -auto-all
+
+Source-Repository head
+  Type:           git
+  Location:       https://rotskoff@github.com/rotskoff/Haskell-PDB-Utilities.git
+
+Executable qc
+  Main-Is:        Test.hs
+  Other-Modules:  Bio.Util.TestBase, Bio.Util.Test,
+                  Bio.Alignment.Test, Bio.GFF3.Test, Bio.Location.Test, Bio.Sequence.Test, Bio.Clustering.Test
+  Hs-Source-Dirs: .  
+  Build-Depends:  base >= 3 && <5, process, containers, random, QuickCheck >= 2, old-time
+  if flag(test)
+     Buildable:   True
+  else
+     Buildable:   False
+
+-- Test.QuickBench needs to be ported to QC2.  Or everything moved over to criterion.
+-- Executable qb
+--  Main-Is:        Bench.hs
+--  Other-Modules:  Test.QuickBench, Bio.Util.TestBase, Bio.Util.Test, 
+--                  Bio.Alignment.Test, Bio.Sequence.Test, Bio.Clustering.Test
+--  Hs-Source-Dirs: .  
+--  Build-Depends:  base >= 3 && <5, process, containers, random
+
+Executable flx
+  Main-Is:        Flx.hs
+  Hs-Source-Dirs: examples .
+  Other-Modules:  Bio.Sequence.SFF
+  Build-Depends:  base >= 3 && <5, bytestring
+  if flag(examples)
+     Buildable:   True
+  else
+     Buildable:   False
+
+Executable fastout
+  Main-Is:        FastOut.hs
+  Hs-Source-Dirs: examples .
+  Build-Depends:  base >= 3 && <5  
+  if flag(examples)
+     Buildable:   True
+  else
+     Buildable:   False
+
+Executable     frecover
+  Main-Is:        FRecover.hs
+  Hs-Source-Dirs: examples .
+  Build-Depends:  base >= 3 && < 5
+  Ghc-Options:    -Wall
+  if flag(examples)
+     Buildable:   True
+  else
+     Buildable:   False
+
+Executable     frename
+  Main-Is:        FRename.hs
+  Hs-Source-Dirs: examples .
+  Build-Depends:  base >= 3 && < 5, bytestring >= 0.9.1
+  Ghc-Options:    -Wall
+  if flag(examples)
+     Buildable:   True
+  else
+     Buildable:   False
+
+Executable     flowclip
+  Main-Is:        FlowClip.hs
+  Hs-Source-Dirs: examples .
+  Build-Depends:  base >= 3 && < 5
+  Ghc-Options:    -Wall
+  if flag(examples)
+     Buildable:   True
+  else
+     Buildable:   False
+
+Executable     orf
+  Main-Is:        Orf.hs
+  Hs-Source-Dirs: examples .
+  Build-Depends:  base >= 3 && < 5
+  Ghc-Options:    -Wall
+  if flag(examples)
+     Buildable:   True
+  else
+     Buildable:   False
+
+Executable     rselect-pe
+  Main-Is:        RSelectPE.hs
+  Hs-Source-Dirs: examples .
+  Build-Depends:  base >= 3 && < 5, random
+  Ghc-Options:    -Wall
+  if flag(examples)
+     Buildable:   True
+  else
+     Buildable:   False
