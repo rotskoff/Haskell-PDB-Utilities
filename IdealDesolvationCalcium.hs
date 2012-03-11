@@ -1,7 +1,9 @@
 -- Coordinate Table for ideal desolvation, Cambridge Cluster
+-- http://www-wales.ch.cam.ac.uk/CCD.html
 -- Used to compare desolvation geometry in situ
 -- WARNING! These atoms are partially initialized. Do not attempt to use them for anything other than their coordinates!
--- Note, there will be a warning issued for every atom. 
+-- Note: there will be a warning issued for every atom. 
+
 module IdealDesolvationCalcium where
 
 import PDBparse

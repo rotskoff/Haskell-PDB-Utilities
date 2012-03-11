@@ -32,7 +32,7 @@ centerAtCalcium cofactor = center calcium $ withinClusive 5.0 calcium cofactor  
 environmentSize :: [Atom] -> Int
 environmentSize = length . centerAtCalcium
 
---Put th
+--Order them for comparison to the ideal models
 groupBySize :: Int -> [[Atom]] -> [[Atom]]
 groupBySize numatms atms = filter (\s -> environmentSize s == numatms) atms
 
@@ -44,7 +44,7 @@ generateReport pdbFile = do
   let totalAtoms = (concatMap atoms protein) ++ cofactor 
   let waters = restype "HOH" $ centerAtCalcium cofactor  
   if (length waters == 0) then do
-      putStr $ (show pdbFile)++"\t"++"Average: 0\tMin: 0\tMax: 0\n"
+      putStr $ (show pdbFile)++"\t0\t0\t0\t0\t0\n"
     else do
       let distanceList = map (norm . coords) waters
       let min = head $ sort distanceList
@@ -52,24 +52,6 @@ generateReport pdbFile = do
       let avg = (sum $ sort distanceList) / fromIntegral(length(distanceList))
       putStr $ (show pdbFile)++"\t"++(show avg)++"\t"++(show min)++"\t"++(show max)++"\t"++
                (show $ environmentSize $ cofactor)++"\t"++(show $ environmentSize $ totalAtoms)++"\n"
-
-
-
-
-
-{-
-alignWithIdeal :: Atom -> [Atom] -> Atom -> [Atom]
-alignWithIdeal a atms idealAtm = rotate atms caPivot a (coords idealAtm) where
-  caPivot = head $ atomtype "CA" atms
--}
-
--- Give RMSD for desolvation patterns of Ca from the ideal versions...
--- Append to file with PDB name...
-{-
-deviationReport :: FilePath -> IO()
-deviationReport pdb = undefined
-  cofactor <- parseCofactorOnly pdb
--}
 
 
 
