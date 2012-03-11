@@ -44,10 +44,11 @@ Source-Repository head
   Type:           git
   Location:       https://rotskoff@github.com/rotskoff/Haskell-PDB-Utilities.git
 
+
+--TODO, tests...
 Executable qc
-  Main-Is:        Test.hs
-  Other-Modules:  Bio.Util.TestBase, Bio.Util.Test,
-                  Bio.Alignment.Test, Bio.GFF3.Test, Bio.Location.Test, Bio.Sequence.Test, Bio.Clustering.Test
+  Main-Is:        Test.hs 
+  Other-Modules: 
   Hs-Source-Dirs: .  
   Build-Depends:  base >= 3 && <5, process, containers, random, QuickCheck >= 2, old-time
   if flag(test)
@@ -58,8 +59,7 @@ Executable qc
 -- Test.QuickBench needs to be ported to QC2.  Or everything moved over to criterion.
 -- Executable qb
 --  Main-Is:        Bench.hs
---  Other-Modules:  Test.QuickBench, Bio.Util.TestBase, Bio.Util.Test, 
---                  Bio.Alignment.Test, Bio.Sequence.Test, Bio.Clustering.Test
+--  Other-Modules:  
 --  Hs-Source-Dirs: .  
 --  Build-Depends:  base >= 3 && <5, process, containers, random
 

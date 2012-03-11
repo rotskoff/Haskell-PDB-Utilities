@@ -80,7 +80,3 @@ splitChains contents = [Protein {atoms = chain1}] ++ splitChains remainder where
 	remainder = dropWhile (\s -> id == chain s) contents
 	id = chain (head contents)
 
-test = "dataset/1N7S.pdb"
-
-
-

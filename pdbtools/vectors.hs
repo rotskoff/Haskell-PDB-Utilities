@@ -2,7 +2,7 @@ module Vectors where
 
 -- A minimal implementation of vector operations for pdb calculations. 
 -- These vector operations are NOT safe... they will not verify dimensionality requirements
--- TODO Integrate with the existing Haskell vector package
+-- TODO; matrix multiplication, factorizations.
 
 import Data.List
 
@@ -47,23 +47,3 @@ vRotate3d theta phi psi vect = [r1 `dot` vect, r2 `dot` vect, r3 `dot` vect] whe
   r1 = [cos(theta)*cos(psi),-cos(phi)*sin(psi)+sin(phi)*sin(theta)*cos(psi),sin(phi)*sin(psi)+cos(phi)*sin(theta)*cos(psi)]
   r2 = [cos(theta)*sin(psi),cos(phi)*cos(psi)+sin(phi)*sin(theta)*sin(psi),-sin(phi)*cos(psi)+cos(phi)*sin(theta)*sin(psi)]
   r3 = [-sin(theta),sin(phi)*cos(theta),cos(phi)*cos(theta)]
-
-
--- A minimal implementation of matrix algebra
--- Basic matrix multiplication, good whenever it's well-defined
--- An implementation of the Strassen algorithm, which is fast but not the fastest
-mtimes = undefined
-
--- The tensor product of two matrices
-tensor :: (Num a) => [[a]] -> [[a]] -> a
-tensor = undefined
-
--- Reduced Row Echelon Form
-rref :: (Num a) => [[a]] -> [[a]]
-rref = undefined
-
--- Some factorizations, PALU, QR, etc.
-palu :: (Num a) => [[a]] -> [[a]] -> [[a]]
-palu = undefined
-
-
