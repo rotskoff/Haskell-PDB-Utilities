@@ -45,89 +45,40 @@ Source-Repository head
   Location:       https://rotskoff@github.com/rotskoff/Haskell-PDB-Utilities.git
 
 
---TODO, tests...
-Executable qc
-  Main-Is:        Test.hs 
-  Other-Modules: 
-  Hs-Source-Dirs: .  
-  Build-Depends:  base >= 3 && <5, process, containers, random, QuickCheck >= 2, old-time
-  if flag(test)
-     Buildable:   True
-  else
-     Buildable:   False
+extra-source-files:
 
--- Test.QuickBench needs to be ported to QC2.  Or everything moved over to criterion.
--- Executable qb
---  Main-Is:        Bench.hs
---  Other-Modules:  
---  Hs-Source-Dirs: .  
---  Build-Depends:  base >= 3 && <5, process, containers, random
+flag tests
+  default: False
 
-Executable flx
-  Main-Is:        Flx.hs
-  Hs-Source-Dirs: examples .
-  Other-Modules:  Bio.Sequence.SFF
-  Build-Depends:  base >= 3 && <5, bytestring
-  if flag(examples)
-     Buildable:   True
-  else
-     Buildable:   False
 
-Executable fastout
-  Main-Is:        FastOut.hs
-  Hs-Source-Dirs: examples .
-  Build-Depends:  base >= 3 && <5  
-  if flag(examples)
-     Buildable:   True
-  else
-     Buildable:   False
+library
+  build-depends:
+    base >3 && <5,
+    bytestring,
+    iteratee,
+    iteratee-compress,
+    transformers
 
-Executable     frecover
-  Main-Is:        FRecover.hs
-  Hs-Source-Dirs: examples .
-  Build-Depends:  base >= 3 && < 5
-  Ghc-Options:    -Wall
-  if flag(examples)
-     Buildable:   True
-  else
-     Buildable:   False
+  exposed-modules:
+    Biobase.Fasta
+    Biobase.Fasta.Import
 
-Executable     frename
-  Main-Is:        FRename.hs
-  Hs-Source-Dirs: examples .
-  Build-Depends:  base >= 3 && < 5, bytestring >= 0.9.1
-  Ghc-Options:    -Wall
-  if flag(examples)
-     Buildable:   True
-  else
-     Buildable:   False
+  ghc-options:
+    -O2 -funbox-strict-fields
 
-Executable     flowclip
-  Main-Is:        FlowClip.hs
-  Hs-Source-Dirs: examples .
-  Build-Depends:  base >= 3 && < 5
-  Ghc-Options:    -Wall
-  if flag(examples)
-     Buildable:   True
+executable Test
+  build-depends:
+  main-is:
+    Tests/Test.hs
+  ghc-options:
+    -O2 -funbox-strict-fields -rtsopts
+  if flag(tests)
+    buildable:
+      True
   else
-     Buildable:   False
+    buildable:
+      False
 
-Executable     orf
-  Main-Is:        Orf.hs
-  Hs-Source-Dirs: examples .
-  Build-Depends:  base >= 3 && < 5
-  Ghc-Options:    -Wall
-  if flag(examples)
-     Buildable:   True
-  else
-     Buildable:   False
-
-Executable     rselect-pe
-  Main-Is:        RSelectPE.hs
-  Hs-Source-Dirs: examples .
-  Build-Depends:  base >= 3 && < 5, random
-  Ghc-Options:    -Wall
-  if flag(examples)
-     Buildable:   True
-  else
-     Buildable:   False
+source-repository head
+  type: git
+  location: git://github.com/rotskoff/Haskell-PDB-Utilities.git

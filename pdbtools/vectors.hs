@@ -37,9 +37,11 @@ angle a b
   | otherwise = acos $ (a `dot` b) / ((norm a) * (norm b))
 
 -- Two Dimensions
+{-
 vRotate :: (Floating a) => a -> [a] -> [a]
 vRotate degs [x,y] = mtimes rMatrix [x,y] where
   rMatrix = [[cos(degs),-sin(degs)],[sin(degs),cos(degs)]]
+-}
 
 vRotate3d :: (Floating a) => a -> a -> a -> [a] -> [a]
 vRotate3d theta phi psi vect = [r1 `dot` vect, r2 `dot` vect, r3 `dot` vect] where

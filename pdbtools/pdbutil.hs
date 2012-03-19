@@ -2,24 +2,33 @@
 
 module PDButil where
 
-import Data.List
+-- Long list of imports...
 import PDBparse
+import Vectors
+import Data.List
 import Data.ByteString.Char8 (ByteString)
 import qualified Data.ByteString.Char8 as B
-import Vectors
+import qualified Data.Map as Map
+import Data.Maybe
 
 -- Pull all atoms of a given name from a list of atoms
 atomtype :: String -> [Atom] -> [Atom]
 atomtype t atmlist = filter matcht atmlist where
    matcht a = atype a == B.pack t
+   
+-- Match the atom's name in the PDB file rather than the underlying type   
+atomname :: String -> [Atom] -> [Atom]
+atomname t atmlist = filter matcht atmlist where
+   matcht a = name a == B.pack t
 
+-- Match the residue type, input the three letter abbreviation
 restype :: String -> [Atom] -> [Atom]
 restype t atmlist = filter matcht atmlist where
    matcht a = resname a == B.pack t
 
 -- Extract the list of alpha-Carbons from a protein
 backbone :: Protein -> [Atom]
-backbone = atomtype "CA" . atoms
+backbone = atomname "CA" . atoms
 
 -- Extract the list of residue name, residue number pairs
 resSeq :: Protein -> [(ByteString,Int)]
@@ -53,7 +62,6 @@ withinClusive :: Double -> Atom -> [Atom] -> [Atom]
 withinClusive range a = filter withinRange where
 	withinRange a' = (distance a a') <= range
 
-
 -- Centers the list of atoms around the specified atom
 center :: Atom -> [Atom] -> [Atom]
 center a = a `shift` [0,0,0]
@@ -74,39 +82,35 @@ atmAngle a b c = angle baVec bcVec where
 	baVec = (coords a) `vSub` (coords b)
 	bcVec = (coords c) `vSub` (coords c)
 
-
--- TODO maybe result
---pdbToFasfa
-{-
+-- Convert a protein to FASTA sequence format
+-- TODO, headers in FASTA file spec
 protein2fasta :: Protein -> ByteString
-protein2fasta protein = B.pack $ concatMap (\s -> convert (resname s)) (atoms protein) where
-  convert = lookup . B.unpack 
-  lookup res symbol = 
-
-  [ ("ALA",'A'),
-    ("CYS",'C'),
-    ("ASP",'D'),
-    ("GLU",'E'),
-    ("PHE",'F'),
-    ("GLY",'G'),
-    ("HIS",'H'),
-    ("ILE",'I'),
-    ("LYS",'K'),
-    ("LEU",'L'),
-    ("MET",'M'),
-    ("ASN",'N'),
-    ("PYL",'O'),
-    ("PRO",'P'),
-    ("GLN",'Q'),
-    ("ARG",'R'),
-    ("SER",'S'),
-    ("THR",'T'),
+protein2fasta protein = B.pack $ concatMap (\s -> convert (resname s)) (backbone protein) where
+  convert name = fromJust $ Map.lookup (B.unpack name) resMap
+  resMap = Map.fromList 
+   [("ALA","A"),
+    ("CYS","C"),
+    ("ASP","D"),
+    ("GLU","E"),
+    ("PHE","F"),
+    ("GLY","G"),
+    ("HIS","H"),
+    ("ILE","I"),
+    ("LYS","K"),
+    ("LEU","L"),
+    ("MET","M"),
+    ("ASN","N"),
+    ("PYL","O"),
+    ("PRO","P"),
+    ("GLN","Q"),
+    ("ARG","R"),
+    ("SER","S"),
+    ("THR","T"),
     --Selenocysteine
-    ("VAL",'V'),
-    ("TRP",'W'),
-    ("TYR",'Y')]
+    ("VAL","V"),
+    ("TRP","W"),
+    ("TYR","Y")]
     -- otherwise, use 'X'
--}
 
 {-
 -- TODO Fix so that it works!

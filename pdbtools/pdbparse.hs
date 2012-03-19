@@ -80,3 +80,5 @@ splitChains contents = [Protein {atoms = chain1}] ++ splitChains remainder where
 	remainder = dropWhile (\s -> id == chain s) contents
 	id = chain (head contents)
 
+test = "3C22.pdb"
+
