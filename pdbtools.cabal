@@ -1,6 +1,6 @@
 Name:                PDBtools
 Version:             0.0.1
-License:             LGPL
+License:             GPL-3
 License-file:        LICENSE
 Cabal-Version:       >= 1.6
 Author:              Grant Rotskoff
@@ -33,52 +33,10 @@ Library
   Exposed-modules:   PDBtools.pdbparse
                      PDBtools.pdbutil
                      PDBtools.vectors
-
-  Extensions:        CPP, ParallelListComp
-  if impl(ghc >= 6.12)
-    Ghc-Options:       -Wall -O2 -fexcess-precision -funbox-strict-fields -auto-all -fno-warn-unused-do-bind
-  else
-    Ghc-Options:       -Wall -O2 -fexcess-precision -funbox-strict-fields -auto-all
-
 Source-Repository head
   Type:           git
-  Location:       https://rotskoff@github.com/rotskoff/Haskell-PDB-Utilities.git
+  Location:       git://github.com/rotskoff/Haskell-PDB-Utilities.git
 
 
-extra-source-files:
-
-flag tests
-  default: False
 
 
-library
-  build-depends:
-    base >3 && <5,
-    bytestring,
-    iteratee,
-    iteratee-compress,
-    transformers
-
-  exposed-modules:
-    Biobase.Fasta
-    Biobase.Fasta.Import
-
-  ghc-options:
-    -O2 -funbox-strict-fields
-
-executable Test
-  build-depends:
-  main-is:
-    Tests/Test.hs
-  ghc-options:
-    -O2 -funbox-strict-fields -rtsopts
-  if flag(tests)
-    buildable:
-      True
-  else
-    buildable:
-      False
-
-source-repository head
-  type: git
-  location: git://github.com/rotskoff/Haskell-PDB-Utilities.git

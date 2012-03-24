@@ -1,5 +1,4 @@
 --PDB Utilities, functions for basic manipulation of PDB data
-
 module PDButil where
 
 -- Long list of imports...
