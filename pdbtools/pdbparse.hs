@@ -1,4 +1,4 @@
-module PDBparse where
+module PDBtools.PDBparse where
 
 import Data.ByteString.Char8 (ByteString)
 import qualified Data.ByteString.Char8 as B
@@ -80,5 +80,4 @@ splitChains contents = [Protein {atoms = chain1}] ++ splitChains remainder where
 	remainder = dropWhile (\s -> id == chain s) contents
 	id = chain (head contents)
 
-test = "3C22.pdb"
 

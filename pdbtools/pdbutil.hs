@@ -1,9 +1,9 @@
 --PDB Utilities, functions for basic manipulation of PDB data
-module PDButil where
+module PDBtools.PDButil where
 
 -- Long list of imports...
-import PDBparse
-import Vectors
+import PDBtools.PDBparse
+import PDBtools.Vectors
 import Data.List
 import Data.ByteString.Char8 (ByteString)
 import qualified Data.ByteString.Char8 as B

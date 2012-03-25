@@ -1,4 +1,4 @@
-module Vectors where
+module PDBtools.Vectors where
 
 -- A minimal implementation of vector operations for pdb calculations. 
 -- These vector operations are NOT safe... they will not verify dimensionality requirements

@@ -5,8 +5,10 @@ The parser will interpret ATOM and HETATM record types.
 When implementing the parser over a large number of files:
 
 1. Compile your code. 
-2. Use mapM_ in your main loop to ensure computations are done sequentially.
+2. Use mapM_ in your main loop to ensure computations are done sequentially, otherwise you'll likely see a stack overflow.
+   There are certainly other solutions to memory management, depending on the sorts of computations that you're hoping to do.
+   If mapM_ doesn't suit your goals, you may want to explore seq and deepSeq.
 
 
 At the moment, all vector operations are conducted by Vectors.hs. Be warned that
-this is an unsafe module (it makes no effort to check vector lengths, etc.; in our case everything is three dimensional. 
+this is an unsafe module (it makes no effort to check vector lengths, etc. In our case everything is three dimensional, so this isn't a problem. Vectors.hs is a module that could benefit from a great deal of expansion. Matrix operations are hopefully coming soon.  
