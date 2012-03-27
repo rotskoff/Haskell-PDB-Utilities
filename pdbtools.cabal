@@ -15,8 +15,10 @@ Description:         This is a collection of modules for the analysis of protein
 		     and HETATM records of a PDB file is preserved.
          
 Homepage:            http://www.github.com/rotskoff
+Build-type:	     Simple
+Stability:	     Experiemental
 
--source-files:
+extra-source-files: README
 
 flag tests
   default: False
@@ -25,14 +27,14 @@ flag tests
 library
   build-depends:
     base >3 && <5,
-    bytestring
+    bytestring,
+    containers
 
   exposed-modules:
     PDBtools.PDBparse
     PDBtools.PDButil
 
   ghc-options:
-    -O2 -funbox-strict-fields
 
 executable Test
   build-depends:
