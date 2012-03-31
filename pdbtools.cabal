@@ -31,8 +31,11 @@ library
     containers
 
   exposed-modules:
-    PDBtools.PDBparse
-    PDBtools.PDButil
+    PDBtools
+    PDButil.PDButil
+    PDButil.PDBparse
+    PDButil.Residues
+    PDButil.Vectors
 
   ghc-options:
 
