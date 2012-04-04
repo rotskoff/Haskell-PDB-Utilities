@@ -2,8 +2,8 @@
 --Try your own PDB as an extra precaution
 module Main where
 
-import PDBtools.PDButil
-import PDBtools.PDBparse
+import PDButil.PDBparse
+import PDBtools.Base
 
 main = do
   contents <- parse "3C22.pdb"

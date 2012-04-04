@@ -1,5 +1,18 @@
---PDB Utilities, functions for basic manipulation of PDB data
-module PDButil.PDButil where
+-- Module	: PDBtools
+-- Copyright	: (c) 2012 Grant Rotskoff
+-- License 	: GPL-3
+--
+-- Maintainer 	: gmr1887@gmail.com
+-- Stability 	: experimental
+
+
+-- The suite of source files in the PDButil directory are meant to complement high-throughput analyses
+-- of three-dimensional protein structure data in the PDB format. Because the source files rely heavily
+-- on one another, it is convenient to import them all into a single module. Examples of analysis projects
+-- are available at http://www.github.com/rotskoff/Haskell-PDB-Utilities 
+
+
+module PDBtools.Base where
 
 -- Long list of imports...
 import PDButil.PDBparse
