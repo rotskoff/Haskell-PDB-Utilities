@@ -1,5 +1,5 @@
 Name:                PDBtools
-Version:             0.0.1
+Version:             0.0.2
 License:             GPL-3
 License-file:        LICENSE
 Cabal-Version:       >= 1.6
@@ -31,10 +31,9 @@ library
     containers
 
   exposed-modules:
-    PDBtools
-    PDButil.PDButil
+    PDBtools.Base
+    PDBtools.Residues
     PDButil.PDBparse
-    PDButil.Residues
     PDButil.Vectors
 
   ghc-options:

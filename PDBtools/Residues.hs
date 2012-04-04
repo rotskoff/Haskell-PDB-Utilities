@@ -1,6 +1,6 @@
 -- Residues centered at the Carbon-Alpha, some sort of directionality constraint
 
-module PDButil.Residues where
+module PDBtools.Residues where
 
 import PDBtools.Base
 import PDButil.PDBparse
