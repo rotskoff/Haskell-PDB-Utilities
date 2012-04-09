@@ -1,3 +1,10 @@
+-- Module	: Vectors
+-- Copyright	: (c) 2012 Grant Rotskoff
+-- License 	: GPL-3
+--
+-- Maintainer 	: gmr1887@gmail.com
+-- Stability 	: experimental
+
 module PDButil.Vectors where
 
 -- A minimal implementation of vector operations for pdb calculations. 

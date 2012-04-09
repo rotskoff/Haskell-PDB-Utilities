@@ -1,4 +1,10 @@
--- Residues centered at the Carbon-Alpha, some sort of directionality constraint
+-- Module	: Residues
+-- Copyright	: (c) 2012 Grant Rotskoff
+-- License 	: GPL-3
+--
+-- Maintainer 	: gmr1887@gmail.com
+-- Stability 	: experimental
+
 
 module PDBtools.Residues where
 

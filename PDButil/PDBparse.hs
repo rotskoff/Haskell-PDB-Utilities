@@ -1,3 +1,10 @@
+-- Module	: PDBparse
+-- Copyright	: (c) 2012 Grant Rotskoff
+-- License 	: GPL-3
+--
+-- Maintainer 	: gmr1887@gmail.com
+-- Stability 	: experimental
+
 module PDButil.PDBparse where
 
 import Data.ByteString.Char8 (ByteString)
