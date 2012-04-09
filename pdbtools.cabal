@@ -16,7 +16,7 @@ Description:         This is a collection of modules for the analysis of protein
          
 Homepage:            http://www.github.com/rotskoff
 Build-type:	     Simple
-Stability:	     Experiemental
+Stability:	     Experimental
 
 extra-source-files: README
 

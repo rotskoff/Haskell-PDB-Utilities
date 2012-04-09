@@ -94,6 +94,17 @@ atmAngle a b c = angle baVec bcVec where
 	baVec = (coords a) `vSub` (coords b)
 	bcVec = (coords c) `vSub` (coords c)
 
+-- The dihedral angles 
+psi :: [Atom] -> Double
+psi res = undefined
+phi :: [Atom] -> Double
+phi res = undefined
+omega :: [Atom] -> Double 
+omega res = undefined
+
+dihedrals :: [Atom] -> Double
+dihedrals res = (phi res,psi res)
+
 -- Convert a protein to FASTA sequence format
 -- TODO, headers in FASTA file spec
 protein2fasta :: Protein -> ByteString
