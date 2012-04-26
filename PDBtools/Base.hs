@@ -12,11 +12,11 @@
 -- are available at http://www.github.com/rotskoff/Haskell-PDB-Utilities 
 
 
-module Base where
+module PDBtools.Base where
 
 -- Long list of imports...
-import PDButil.PDBparse
-import PDButil.Vectors
+import PDBtools.PDButil.PDBparse
+import PDBtools.PDButil.Vectors
 import Data.List
 import Data.ByteString.Char8 (ByteString)
 import qualified Data.ByteString.Char8 as B

@@ -9,7 +9,7 @@
 module PDBtools.Residues where
 
 import PDBtools.Base
-import PDButil.PDBparse
+import PDBtools.PDButil.PDBparse
 
 --One should really only use these methods on proteins, but for the sake of composing selections, the input form is [Atom]
 

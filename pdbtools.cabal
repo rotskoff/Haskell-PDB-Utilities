@@ -33,8 +33,8 @@ library
   exposed-modules:
     PDBtools.Base
     PDBtools.Residues
-    PDButil.PDBparse
-    PDButil.Vectors
+    PDBtools.PDButil.PDBparse
+    PDBtools.PDButil.Vectors
 
   ghc-options:
 
