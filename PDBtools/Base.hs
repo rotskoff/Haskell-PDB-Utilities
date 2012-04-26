@@ -12,7 +12,7 @@
 -- are available at http://www.github.com/rotskoff/Haskell-PDB-Utilities 
 
 
-module PDBtools.Base where
+module Base where
 
 -- Long list of imports...
 import PDButil.PDBparse
@@ -32,6 +32,10 @@ atomtype t atmlist = filter matcht atmlist where
 atomname :: String -> [Atom] -> [Atom]
 atomname t atmlist = filter matcht atmlist where
    matcht a = name a == B.pack t
+
+atomnames :: [String] -> [Atom] -> [Atom]
+atomnames ts atmlist = filter matchts atmlist where
+    matchts a = name a `elem` (map B.pack ts)
 
 -- Match the residue type, input the three letter abbreviation
 restype :: String -> [Atom] -> [Atom]
@@ -94,67 +98,69 @@ atmAngle a b c = angle baVec bcVec where
 	baVec = (coords a) `vSub` (coords b)
 	bcVec = (coords c) `vSub` (coords c)
 
--- The dihedral angles 
-psi :: [Atom] -> Double
-psi res = undefined
-phi :: [Atom] -> Double
-phi res = undefined
-omega :: [Atom] -> Double 
-omega res = undefined
+-- Given a residue, extract its number and take the residues immediately before and after
+-- Pull the dihedral determining atoms
+-- make the vectors
+-- calculate normals
+-- get angles between normals
 
-dihedrals :: [Atom] -> Double
-dihedrals res = (phi res,psi res)
+
+--TODO TESTING!!!
+dihedrals :: Atom -> [Atom] -> (Double,Double)
+dihedrals cAlpha atms
+    | name cAlpha == B.pack "CA" = (psi v1 v2,phi v2 v3)
+    | otherwise = error "Please input a Carbon Alpha atom." where
+    prevCO = coords $ head $ filter (\s -> resid s == (resid cAlpha)-1) $ atomname "C" atms
+    currCA = coords $ cAlpha
+    currN = coords $ head $ filter (\s -> resid s == resid cAlpha) $ atomname "N" atms
+    currCO = coords $ head $ filter (\s -> resid s == resid cAlpha) $ atomname "C" atms
+    nextN = coords $ head $ filter (\s -> resid s == (resid cAlpha)+1) $ atomname "N" atms
+    a = vSub prevCO currCA
+    b = vSub currN currCA
+    c = vSub currCO currCA
+    d = vSub nextN currCA
+    v1 = a `cross` b
+    v2 = c `cross` b
+    v3 = c `cross` d
+    psi v1 v2
+        | a `dot` v1 < 0 =  angle v1 v2
+        | otherwise = -(angle v1 v2)
+    phi v2 v3
+        | d `dot` v3 > 0 = angle v2 v3
+        | otherwise = -(angle v2 v3)
+
 
 -- Convert a protein to FASTA sequence format
 -- TODO, headers in FASTA file spec
 protein2fasta :: Protein -> ByteString
-protein2fasta protein = B.pack $ concatMap (\s -> convert (resname s)) (backbone protein) where
-  convert name = fromJust $ Map.lookup (B.unpack name) resMap
-  resMap = Map.fromList 
-   [("ALA","A"),
-    ("CYS","C"),
-    ("ASP","D"),
-    ("GLU","E"),
-    ("PHE","F"),
-    ("GLY","G"),
-    ("HIS","H"),
-    ("ILE","I"),
-    ("LYS","K"),
-    ("LEU","L"),
-    ("MET","M"),
-    ("ASN","N"),
-    ("PYL","O"),
-    ("PRO","P"),
-    ("GLN","Q"),
-    ("ARG","R"),
-    ("SER","S"),
-    ("THR","T"),
-    --Selenocysteine
-    ("VAL","V"),
-    ("TRP","W"),
-    ("TYR","Y")]
-    -- otherwise, use 'X'
+protein2fasta protein = B.pack $ concatMap (\s -> convert (resname s)) (backbone protein)
 
-{-
--- TODO Fix so that it works!
-rotateAboutOrigin :: [Atom] -> Atom -> [Double] -> [Atom]
-rotateAboutOrigin atms tracer destination = map (\s -> s {coords = (translate (coords s))}) atms where
-  [x,y,z] = destination
-  [x',y',z'] = coords tracer
-  psi = angle [y',z'] [y,z] --yz angle
-  p = angle [x',z'] [x,z] --xz angle
-  phi = angle [x',y'] [x,y] --xy angle
-  translate = vRotate3d theta psi phi
-
--- Rotate a list of atoms about a fixed atom by moving the selected atom to a specified destination
-rotate :: [Atom] -> Atom -> Atom -> [Double] -> [Atom]
-rotate atms pivot tracer destination = translateBy (coords pivot) rotatedAtms where
-  centeredAtPivot = center pivot atms
-  rotatedAtms = rotateAboutOrigin centeredAtPivot tracer destination
-
--}
-
-
-
-
-
+convert :: ByteString -> String  
+convert name
+   | query == Nothing = "X" 
+   | otherwise = fromJust query where 
+   query = Map.lookup (B.unpack name) resMap
+   resMap = Map.fromList 
+    [("ALA","A"),
+     ("CYS","C"),
+     ("ASP","D"),
+     ("GLU","E"),
+     ("PHE","F"),
+     ("GLY","G"),
+     ("HIS","H"),
+     ("ILE","I"),
+     ("LYS","K"),
+     ("LEU","L"),
+     ("MET","M"),
+     ("ASN","N"),
+     ("PYL","O"),
+     ("PRO","P"),
+     ("GLN","Q"),
+     ("ARG","R"),
+     ("SER","S"),
+     ("THR","T"),
+     --Selenocysteine
+     ("VAL","V"),
+     ("TRP","W"),
+     ("TYR","Y")]
+     -- otherwise, use 'X'
