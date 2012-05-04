@@ -5,7 +5,7 @@
 -- Maintainer 	: gmr1887@gmail.com
 -- Stability 	: experimental
 
-module PDBtools.PDButil.Vectors where
+module PDButil.Vectors where
 -- A minimal implementation of vector operations for pdb calculations. 
 -- These vector operations are NOT safe... they will not verify dimensionality requirements
 -- TODO; matrix multiplication, factorizations.

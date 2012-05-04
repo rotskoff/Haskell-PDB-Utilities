@@ -12,11 +12,11 @@
 -- are available at http://www.github.com/rotskoff/Haskell-PDB-Utilities 
 
 
-module PDBtools.Base where
+module Base where
 
 -- Long list of imports...
-import PDBtools.PDButil.PDBparse
-import PDBtools.PDButil.Vectors
+import PDButil.PDBparse
+import PDButil.Vectors
 import Data.List
 import Data.ByteString.Char8 (ByteString)
 import qualified Data.ByteString.Char8 as B
@@ -98,36 +98,47 @@ atmAngle a b c = angle baVec bcVec where
 	baVec = (coords a) `vSub` (coords b)
 	bcVec = (coords c) `vSub` (coords c)
 
--- Given a residue, extract its number and take the residues immediately before and after
--- Pull the dihedral determining atoms
--- make the vectors
--- calculate normals
--- get angles between normals
+dihedrals :: Protein -> [(Double,Double)]
+dihedrals p = map (\cAlpha -> dihedral cAlpha (atoms p)) $ backbone p
+
+kth :: Int -> Atom -> String -> [Atom] -> [Double]
+kth k cAlpha t atms
+    | (getAdjacent k cAlpha t atms) == [] = [0,0,0]
+    | otherwise = coords $ head $ getAdjacent k cAlpha t atms
+
+getAdjacent :: Int -> Atom -> String -> [Atom] -> [Atom]
+getAdjacent k cAlpha t atms = filter (\s -> resid s == resid cAlpha+k) $ atomname t atms 
 
 
---TODO TESTING!!!
-dihedrals :: Atom -> [Atom] -> (Double,Double)
-dihedrals cAlpha atms
-    | name cAlpha == B.pack "CA" = (psi v1 v2,phi v2 v3)
+--TODO TESTING
+dihedral :: Atom -> [Atom] -> (Double,Double)
+dihedral cAlpha atms
+    | prevCO == [0,0,0] || nextN == [0,0,0] = (0,0)
+    | name cAlpha == B.pack "CA" = (phi v1 v2,psi v2 v3)
     | otherwise = error "Please input a Carbon Alpha atom." where
-    prevCO = coords $ head $ filter (\s -> resid s == (resid cAlpha)-1) $ atomname "C" atms
+    prevCO = kth (-1) cAlpha "C" atms
     currCA = coords $ cAlpha
-    currN = coords $ head $ filter (\s -> resid s == resid cAlpha) $ atomname "N" atms
-    currCO = coords $ head $ filter (\s -> resid s == resid cAlpha) $ atomname "C" atms
-    nextN = coords $ head $ filter (\s -> resid s == (resid cAlpha)+1) $ atomname "N" atms
+    currN = kth 0 cAlpha "N" atms
+    currCO = kth 0 cAlpha "C" atms
+    nextN = kth 1 cAlpha "N" atms
     a = vSub prevCO currCA
     b = vSub currN currCA
-    c = vSub currCO currCA
-    d = vSub nextN currCA
+    c = vSub currCA currCO
+    d = vSub currCA nextN
     v1 = a `cross` b
     v2 = c `cross` b
     v3 = c `cross` d
-    psi v1 v2
+    phi v1 v2
         | a `dot` v1 < 0 =  angle v1 v2
         | otherwise = -(angle v1 v2)
-    phi v2 v3
+    psi v2 v3
         | d `dot` v3 > 0 = angle v2 v3
         | otherwise = -(angle v2 v3)
+
+rama :: Protein -> IO()
+rama p = do
+  let toTSV (phi,psi) = (show phi) ++ "\t" ++ (show psi) 
+  mapM_ putStrLn $ map toTSV $ dihedrals p
 
 
 -- Convert a protein to FASTA sequence format
