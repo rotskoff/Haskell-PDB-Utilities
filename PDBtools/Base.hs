@@ -1,4 +1,4 @@
--- Module	: PDBtools
+-- Module	: Base, the standard functions
 -- Copyright	: (c) 2012 Grant Rotskoff
 -- License 	: GPL-3
 --
@@ -11,11 +11,11 @@
 -- on one another, it is convenient to import them all into a single module. Examples of analysis projects
 -- are available at http://www.github.com/rotskoff/Haskell-PDB-Utilities 
 
-module PDBtools.Base where
+module Base where
 
 -- Long list of imports...
-import PDBtools.PDButil.PDBparse
-import PDBtools.PDButil.Vectors
+import PDButil.PDBparse
+import PDButil.Vectors
 import Data.List
 import Data.ByteString.Char8 (ByteString)
 import qualified Data.ByteString.Char8 as B

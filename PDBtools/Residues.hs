@@ -6,10 +6,10 @@
 -- Stability 	: experimental
 
 
-module PDBtools.Residues where
+module Residues where
 
-import PDBtools.Base
-import PDBtools.PDButil.PDBparse
+import Base
+import PDButil.PDBparse
 
 --One should really only use these methods on proteins, but for the sake of composing selections, the input form is [Atom]
 

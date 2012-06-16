@@ -5,7 +5,7 @@
 -- Maintainer 	: gmr1887@gmail.com
 -- Stability 	: experimental
 
-module PDBtools.PDButil.PDBparse where
+module PDButil.PDBparse where
 
 import Data.ByteString.Char8 (ByteString)
 import qualified Data.ByteString.Char8 as B
