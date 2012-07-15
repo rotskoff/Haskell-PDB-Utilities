@@ -5,6 +5,7 @@
 -- Maintainer 	: gmr1887@gmail.com
 -- Stability 	: experimental
 
+-- A module providing residue selection groups. 
 
 module Residues where
 
@@ -34,7 +35,13 @@ nonpolar :: [Atom] -> [Atom]
 nonpolar atms = filter (\s -> elem s $ polar atms) atms
 
 hydrophobic :: [Atom] -> [Atom]
-hydrophobic = nonpolar
+hydrophobic = undefined
 
 hydrophillic :: [Atom] -> [Atom]
-hydrophillic = polar 
+hydrophillic = undefined
+
+-- Given a resname, provide the structure in the standard datatype. 
+-- Coordinates are centered around the carbon alpha
+-- The C-alpha N bond lies along the x-axis, with N in the negative direction
+structure :: String -> [Atom]
+structure = undefined

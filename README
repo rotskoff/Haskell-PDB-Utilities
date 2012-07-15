@@ -2,6 +2,10 @@ These modules provide an algebraic data type for atoms and proteins.
 The data is expected to come from Protein Data Bank .pdb files. 
 The parser will interpret ATOM and HETATM record types.
 
+One major TODO is standardizing the atom selection keywords with an existing 
+platform. I, at the moment, prefer the syntax of NAMD. It's imperfect, but I ind the keywords relatively clear and more memorable than those in PyMol. 
+
+
 When implementing the parser over a large number of files:
 
 1. Compile your code. 
