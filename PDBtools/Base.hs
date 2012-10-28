@@ -62,7 +62,7 @@ distance :: Atom -> Atom -> Double
 distance a1 a2 = norm $ vSub (coords a1) (coords a2)
 
 -- Root Mean Squared Deviation, a measure of the total distance change
--- Only well-defined if you input the same protein!
+-- Only well-defined if you input the same molecule!
 rmsd :: [Atom] -> [Atom] -> Double
 rmsd atms atms' = sqrt $ avg sqdist where
     avg ds = (1/fromIntegral(length(ds))) * sum(ds)
